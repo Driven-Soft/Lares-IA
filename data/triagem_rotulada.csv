@@ -1,0 +1,29 @@
+descricao,bairro,categoria,prioridade
+"buraco enorme na frente da escola, carro ja furou pneu",Vila Mariana,BURACO,ALTA
+"Tem uma cratera no meio da avenida, motoqueiro quase caiu ontem a noite",Itaquera,BURACO,ALTA
+"asfalto todo esburacado na minha rua, da trabalho passar de carro",Pirituba,BURACO,MEDIA
+"buraquinho pequeno perto do meio-fio, nada urgente",Moema,BURACO,BAIXA
+"poste apagado faz uma semana, a rua fica um breu e ja teve assalto",Capão Redondo,ILUMINACAO,ALTA
+lampada do poste fica piscando a noite toda,Santana,ILUMINACAO,MEDIA
+a luz da praça ta queimada,Tatuapé,ILUMINACAO,MEDIA
+"poste aceso durante o dia todo, desperdicio de energia",Lapa,ILUMINACAO,BAIXA
+jogaram um monte de entulho na calçada e ta bloqueando a passagem,Brasilândia,LIXO,MEDIA
+"lixo acumulado na esquina, ta cheio de rato",Sé,LIXO,ALTA
+o caminhao de coleta nao passou essa semana,Butantã,LIXO,MEDIA
+sofá velho abandonado na rua,Mooca,LIXO,BAIXA
+"calçada toda quebrada, minha mae idosa ja tropeçou e caiu",Saúde,CALCADA,ALTA
+"nao tem rampa na esquina, cadeirante nao consegue atravessar",Penha,CALCADA,MEDIA
+"piso da calcada solto, todo desnivelado",Perdizes,CALCADA,MEDIA
+raiz levantou um pedaço da calçada,Pinheiros,CALCADA,MEDIA
+"arvore caiu em cima da fiação, ta soltando faisca",Jabaquara,ARVORE,ALTA
+galho grande quebrado pendurado em cima do ponto de onibus,Campo Limpo,ARVORE,ALTA
+"preciso de poda, os galhos tao encostando na janela",Vila Prudente,ARVORE,MEDIA
+folhas da arvore entupindo a calha de casa,Ipiranga,ARVORE,BAIXA
+"farol apagado no cruzamento da avenida, quase teve batida",Ipiranga,SINALIZACAO,ALTA
+placa de pare caida na esquina,Cursino,SINALIZACAO,ALTA
+faixa de pedestre toda apagada na frente do mercado,Bela Vista,SINALIZACAO,MEDIA
+placa com nome da rua torta,Pinheiros,SINALIZACAO,BAIXA
+vazamento de agua na rua faz dias,Casa Verde,OUTROS,MEDIA
+pichação no muro da praça,Freguesia do Ó,OUTROS,BAIXA
+quero pedir uma pizza,Moema,OUTROS,BAIXA
+barulho de festa ate tarde todo fim de semana,Vila Madalena,OUTROS,BAIXA
