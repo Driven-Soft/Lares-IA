@@ -1,0 +1,12 @@
+# Dependências de execução do serviço.
+# scikit-learn fica fixo na versão usada no treinamento: o artefato .joblib
+# só é garantido na mesma versão que o serializou.
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+scikit-learn==1.9.1
+pandas==3.1.0
+numpy==2.5.4
+joblib==1.6.0
+pydantic==2.14.1
+openai==3.46.0
+python-dotenv==1.2.4
