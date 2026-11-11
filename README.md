@@ -8,6 +8,8 @@
 
 **Repositórios integrados:** [LaresApi-Java](https://github.com/Driven-Soft/LaresApi-Java) · [Lares-Mobile](https://github.com/Driven-Soft/Lares-Mobile)
 
+**Serviço no ar:** https://lares-ia.onrender.com (abre o Swagger). No plano free do Render, o serviço dorme após 15 minutos sem uso, e a primeira chamada depois disso leva cerca de 1 minuto.
+
 ### Integrantes
 
 | Nome | RM |
@@ -143,7 +145,8 @@ Lares-IA/
 │   ├── modelo/                   # modelo_prazo.joblib
 │   ├── tests/                    # pytest
 │   └── .env.example
-└── docs/                         # relatórios de avaliação
+├── docs/                         # relatórios de avaliação
+└── render.yaml                   # deploy no Render (Blueprint)
 ```
 
 ## 7. Como executar
@@ -177,11 +180,11 @@ python pipeline/avaliacao_triagem.py     # usa a OPENAI_API_KEY do servico_ia/.e
 ```
 
 ### Deploy no Render
-Web Service com:
-- **Root Directory:** `servico_ia`
-- **Build Command:** `pip install -r requirements.txt`
-- **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
-- **Variáveis de ambiente:** `OPENAI_API_KEY`, `LARES_IA_API_KEY` (a chave que a API Java manda), `OPENAI_MODEL` (opcional) e `PYTHON_VERSION=3.12.3`
+O serviço está no ar em https://lares-ia.onrender.com e está descrito no [`render.yaml`](render.yaml) (Blueprint): Web Service Python no plano free, com Root Directory `servico_ia`, build `pip install -r requirements.txt`, start `uvicorn main:app --host 0.0.0.0 --port $PORT` e health check em `/health`.
+
+1. No Render: **New → Blueprint** e escolha este repositório.
+2. Preencha a `OPENAI_API_KEY` quando o Render pedir. A `LARES_IA_API_KEY` é gerada automaticamente; copie o valor em **Environment** e passe para a API Java, que manda essa chave no header `X-API-Key`.
+3. Cada push na `main` que muda a pasta `servico_ia` faz um novo deploy.
 
 ## 8. Contrato da API
 
