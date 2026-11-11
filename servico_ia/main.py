@@ -10,15 +10,21 @@ descrição e o bairro de uma ocorrência e devolve a triagem:
 
 Autenticação: quando a variável LARES_IA_API_KEY está definida, POST
 /triagem exige o header X-API-Key com o mesmo valor. Sem a variável
-(execução local), o endpoint fica aberto. GET /health é sempre público.
+(execução local), o endpoint fica aberto. GET /health é sempre público, e
+a raiz (/) redireciona para o Swagger (/docs).
 
 Configuração: arquivo .env nesta pasta (ver .env.example).
+
+Log: as chamadas a GET /health não entram no log de acesso, porque o
+Render chama essa rota a cada poucos segundos para saber se o serviço está
+de pé.
 
 Execução local:
     uvicorn main:app --reload --port 8000
 """
 from __future__ import annotations
 
+import logging
 import os
 import secrets
 from pathlib import Path
@@ -26,6 +32,7 @@ from typing import Literal, Optional
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Security, status
+from fastapi.responses import RedirectResponse
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -34,6 +41,20 @@ load_dotenv(Path(__file__).parent / ".env")
 from classificador import classificar_com_llm  # noqa: E402
 from prazo import ARTEFATO, estimar_prazo  # noqa: E402
 from regras import classificar_por_regras  # noqa: E402
+
+
+class SemHealthCheck(logging.Filter):
+    """Tira do log de acesso do uvicorn as chamadas a /health."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        # Argumentos do log de acesso: (cliente, método, caminho, versão HTTP, status)
+        args = record.args
+        if isinstance(args, tuple) and len(args) >= 3:
+            return str(args[2]).split("?")[0] != "/health"
+        return True
+
+
+logging.getLogger("uvicorn.access").addFilter(SemHealthCheck())
 
 app = FastAPI(
     title="Lares - Serviço de IA",
@@ -74,6 +95,12 @@ class TriagemResponse(BaseModel):
     confianca: float = Field(..., ge=0, le=1)
     prazo_estimado_dias: int = Field(..., alias="prazoEstimadoDias", ge=1)
     origem: Literal["llm", "fallback"]
+
+
+@app.get("/", include_in_schema=False)
+def raiz() -> RedirectResponse:
+    """Quem abre a URL do serviço no navegador cai direto no Swagger."""
+    return RedirectResponse(url="/docs")
 
 
 @app.get("/health")

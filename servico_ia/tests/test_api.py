@@ -8,6 +8,8 @@ a autenticação por X-API-Key.
 
 Executar:  pytest -v
 """
+import logging
+
 from fastapi.testclient import TestClient
 
 import main
@@ -33,6 +35,30 @@ def test_health_responde_ok():
     body = r.json()
     assert body["status"] == "ok"
     assert body["llm_configurado"] is False
+
+
+def _linha_de_acesso(caminho):
+    """Registro no formato do log de acesso do uvicorn."""
+    return logging.LogRecord("uvicorn.access", logging.INFO, "", 0, '%s - "%s %s HTTP/%s" %d',
+                             ("10.0.0.1:5000", "GET", caminho, "1.1", 200), None)
+
+
+def test_log_de_acesso_ignora_o_health_check():
+    filtro = main.SemHealthCheck()
+    assert filtro.filter(_linha_de_acesso("/health")) is False
+    assert filtro.filter(_linha_de_acesso("/health?x=1")) is False
+
+
+def test_log_de_acesso_mantem_as_outras_rotas():
+    filtro = main.SemHealthCheck()
+    assert filtro.filter(_linha_de_acesso("/triagem")) is True
+    assert filtro.filter(_linha_de_acesso("/")) is True
+
+
+def test_raiz_redireciona_para_o_swagger():
+    r = client.get("/", follow_redirects=False)
+    assert r.status_code == 307
+    assert r.headers["location"] == "/docs"
 
 
 # --------------------------------------------------------------------------
