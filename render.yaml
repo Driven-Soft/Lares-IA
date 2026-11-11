@@ -1,0 +1,25 @@
+# Blueprint do Render para o serviço de IA do Lares.
+# Render → New → Blueprint → escolher este repositório. Na criação, o Render
+# pede o valor da OPENAI_API_KEY e gera a LARES_IA_API_KEY sozinho.
+services:
+  - type: web
+    name: lares-ia
+    runtime: python
+    plan: free
+    region: virginia            # região do Render mais próxima do Brasil; não muda depois de criado
+    rootDir: servico_ia         # só mudanças nesta pasta disparam um novo deploy
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION     # mesma versão usada no treino do modelo
+        value: 3.12.3
+      - key: OPENAI_MODEL
+        value: gpt-4.1-mini
+      - key: OPENAI_TIMEOUT
+        value: "10"
+      - key: OPENAI_API_KEY     # secreta: o Render pede o valor na criação
+        sync: false
+      - key: LARES_IA_API_KEY   # chave que a API Java manda no header X-API-Key
+        generateValue: true
