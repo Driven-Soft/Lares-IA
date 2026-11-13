@@ -33,7 +33,6 @@
 9. [Testes e avaliação](#9-testes-e-avaliação)
 10. [Limitações](#10-limitações)
 11. [Uso responsável](#11-uso-responsável)
-12. [Uso de IA generativa no desenvolvimento](#12-uso-de-ia-generativa-no-desenvolvimento)
 
 ---
 
