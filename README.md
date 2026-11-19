@@ -33,6 +33,7 @@
 9. [Testes e avaliação](#9-testes-e-avaliação)
 10. [Limitações](#10-limitações)
 11. [Uso responsável](#11-uso-responsável)
+12. [Declaração de uso de IA generativa](#12-declaração-de-uso-de-ia-generativa)
 
 ---
 
@@ -243,3 +244,12 @@ O erro é pequeno em LIXO (3,8 dias) e BURACO (12,7) e grande em ÁRVORE (45,8) 
 - **Dados pessoais:** o SP156 já vem sem dados pessoais. O serviço não grava os relatos e não registra o texto deles em log, porque o cidadão pode escrever nomes ou endereços.
 - **Manipulação do prompt:** o relato vai como mensagem do usuário, e o prompt de sistema manda ignorar instruções dentro dele. A resposta só é aceita se seguir o schema e as listas de categoria e prioridade.
 - **Decisão humana:** a IA sugere; o gestor confirma ou corrige a categoria antes de atender.
+
+## 12. Declaração de uso de IA generativa
+
+| Ferramenta | Para quê |
+| --- | --- |
+| Claude (Anthropic) | Apoio no desenvolvimento: testes, scripts do pipeline de dados, relatos rotulados iniciais da avaliação e redação dos relatórios. |
+| OpenAI (`gpt-4.1-mini`) | Parte da solução, não do desenvolvimento: é o LLM que classifica os relatos no `POST /triagem`. |
+
+Todo o conteúdo gerado com apoio de IA foi revisado pelo grupo.
